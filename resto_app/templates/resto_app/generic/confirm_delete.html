@@ -1,0 +1,19 @@
+{% extends "resto_app/base.html" %}
+{% block title %}Supprimer{% endblock %}
+{% block header_title %}Supprimer{% endblock %}
+
+{% block content %}
+<div class="stack">
+  <div class="card">
+    <div class="card__body">
+      <p class="muted">Confirmer la suppression :</p>
+      <p class="title">{{ object }}</p>
+    </div>
+    <form method="post" class="card__actions">
+      {% csrf_token %}
+      <button class="btn btn--danger" type="submit">Supprimer</button>
+      <a class="btn btn--ghost" href="javascript:history.back()">Annuler</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

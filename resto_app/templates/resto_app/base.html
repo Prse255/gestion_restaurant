@@ -1,0 +1,50 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{% block title %}Gestion Restaurant{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'resto_app/mobile.css' %}">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__row">
+    <div class="topbar__title">{% block header_title %}Gestion Restaurant{% endblock %}</div>
+
+    {% if user.is_authenticated %}
+      <div class="topbar__actions">
+        <span class="topbar__user">{{ user.username }}</span>
+        <form method="post" action="{% url 'logout' %}" style="margin:0;">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{% url 'login' %}">
+  <button type="submit" class="topbar__link">Déconnexion</button>
+</form>
+
+      </div>
+    {% endif %}
+  </div>
+</header>
+
+
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
+
+{% if not hide_nav %}
+<nav class="bottomnav">
+  <a class="bottomnav__item {% if request.path == '/' or '/commandes/' in request.path %}is-active{% endif %}"
+     href="{% url 'commande_list' %}">Commandes</a>
+
+  <a class="bottomnav__item {% if '/plats/' in request.path %}is-active{% endif %}"
+     href="{% url 'plat_list' %}">Plats</a>
+
+  <a class="bottomnav__item {% if '/clients/' in request.path %}is-active{% endif %}"
+     href="{% url 'client_list' %}">Clients</a>
+</nav>
+{% endif %}
+
+
+</body>
+</html>

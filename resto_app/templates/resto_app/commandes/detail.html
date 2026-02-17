@@ -1,0 +1,53 @@
+{% extends "resto_app/base.html" %}
+{% block title %}Commande #{{ commande.id }}{% endblock %}
+{% block header_title %}Commande #{{ commande.id }}{% endblock %}
+
+{% block content %}
+<div class="stack">
+  <div class="card">
+    <div class="card__body">
+      <div class="title">{{ commande.client.nom }}</div>
+      <div class="muted">{{ commande.date_commande|date:"d/m/Y H:i" }}</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="card__body">
+      <div class="muted">Plats</div>
+
+      <div class="stack-sm" style="margin-top:10px;">
+        {% for d in details %}
+          <div class="row">
+            <div>
+              <div class="title-sm">{% if d.plat %}{{ d.plat.nom }}{% else %}(plat supprimé){% endif %}</div>
+              <div class="muted">Quantité: {{ d.quantite }}</div>
+            </div>
+            {% if d.plat %}
+              <div class="pill">{{ d.plat.prix }} × {{ d.quantite }}</div>
+            {% endif %}
+          </div>
+        {% empty %}
+          <div class="muted">Aucun plat dans cette commande.</div>
+        {% endfor %}
+      </div>
+
+      <div class="divider" style="margin-top:12px;"></div>
+
+      <div class="row" style="margin-top:12px;">
+        <div class="title">Total</div>
+        <div class="pill">{{ total|floatformat:2 }}</div>
+      </div>
+    </div>
+
+    <div class="card__actions">
+  {% if perms.resto_app.change_commande %}
+    <a class="btn btn--ghost" href="{% url 'commande_edit' commande.id %}">Modifier</a>
+  {% endif %}
+  {% if perms.resto_app.delete_commande %}
+    <a class="btn btn--danger" href="{% url 'commande_delete' commande.id %}">Supprimer</a>
+  {% endif %}
+</div>
+
+  </div>
+</div>
+{% endblock %}

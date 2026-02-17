@@ -1,0 +1,14 @@
+# Python
+*.pyc
+__pycache__/
+
+# Base de données
+db.sqlite3
+
+# Environnement virtuel
+env/
+
+# IDE / OS
+*.idea
+*.vscode
+.DS_Store
