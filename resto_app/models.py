@@ -18,11 +18,20 @@ class Plat(models.Model):
 
 
 class Commande(models.Model):
+    STATUT_CHOICES = [
+        ("EN_ATTENTE", "En attente"),
+        ("EN_PREPARATION", "En préparation"),
+        ("PRETE", "Prête"),
+        ("REMISE", "Remise"),
+    ]
+
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     date_commande = models.DateTimeField(auto_now_add=True)
+    statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default="EN_ATTENTE")
 
     def __str__(self):
         return f"Commande #{self.id} - {self.client.nom}"
+
 
 
 class DetailCommande(models.Model):
@@ -33,3 +42,5 @@ class DetailCommande(models.Model):
     def __str__(self):
         plat_nom = self.plat.nom if self.plat else "Plat supprimé"
         return f"{plat_nom} x{self.quantite} (Commande #{self.commande.id})"
+
+

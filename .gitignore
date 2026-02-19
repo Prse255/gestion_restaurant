@@ -1,14 +1,17 @@
 # Python
-*.pyc
 __pycache__/
+*.pyc
+*.pyo
 
-# Base de données
+# Virtual environment
+env/
+venv/
+
+# SQLite
 db.sqlite3
 
-# Environnement virtuel
-env/
+# VSCode
+.vscode/
 
-# IDE / OS
-*.idea
-*.vscode
+# Mac
 .DS_Store
